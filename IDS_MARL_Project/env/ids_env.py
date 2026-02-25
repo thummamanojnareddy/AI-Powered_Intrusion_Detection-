@@ -1,63 +1,66 @@
 import gym
 import numpy as np
+import random
 
 class IDSEnv(gym.Env):
     def __init__(self):
         super(IDSEnv, self).__init__()
 
-        # Actions:
+        # Action space
         # 0 = Allow
         # 1 = Alert
         # 2 = Block
-        # 3 = Monitor
+        # 3 = Isolate
         self.action_space = gym.spaces.Discrete(4)
 
-        # State:
-        # [anomaly_score, packet_rate, failed_logins, cpu_usage]
+        # State: 4 network features
         self.observation_space = gym.spaces.Box(
             low=0.0, high=1.0, shape=(4,), dtype=np.float32
         )
 
+        # Multi-cloud providers
+        self.cloud_providers = ["AWS", "Azure", "GCP"]
+
         self.state = None
-
-    # Generate realistic traffic
-    def generate_state(self):
-        # 70% normal traffic, 30% attack
-        if np.random.rand() < 0.7:
-            # Normal → low anomaly
-            anomaly = np.random.uniform(0.0, 0.4)
-        else:
-            # Attack → high anomaly
-            anomaly = np.random.uniform(0.7, 1.0)
-
-        other_features = np.random.rand(3)
-        return np.array([anomaly, *other_features], dtype=np.float32)
+        self.current_cloud = None
 
     def reset(self):
-        self.state = self.generate_state()
+        # Generate random network state
+        self.state = np.random.rand(4).astype(np.float32)
+
+        # Random cloud source
+        self.current_cloud = random.choice(self.cloud_providers)
+
         return self.state
 
     def step(self, action):
         anomaly_score = self.state[0]
 
-        # Ground truth
+        # Ground truth attack condition
         attack = anomaly_score > 0.6
 
         # Reward logic
-        if attack:
-            if action in [1, 2, 3]:
-                reward = 10      # Correct detection
-            else:
-                reward = -10     # Missed attack
+        if attack and action in [1, 2, 3]:
+            reward = 10
+        elif attack and action == 0:
+            reward = -10
+        elif not attack and action == 0:
+            reward = 5
         else:
-            if action == 0:
-                reward = 5       # Correct normal
-            else:
-                reward = -5      # False alarm
+            reward = -5
 
         done = False
 
         # Next state
-        self.state = self.generate_state()
+        self.state = np.random.rand(4).astype(np.float32)
 
-        return self.state, reward, done, {}
+        # Next cloud traffic
+        self.current_cloud = random.choice(self.cloud_providers)
+
+        # Return cloud info in info dict
+        info = {
+            "cloud": self.current_cloud,
+            "attack": attack
+        }
+
+        return self.state, reward, done, info
