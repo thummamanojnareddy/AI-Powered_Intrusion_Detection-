@@ -103,3 +103,83 @@ Example features:
 ---
 
 ## 📂 Project Structure
+## 📂 Project Structure
+
+```
+intrusion-detection-system
+│
+├── dataset
+│   └── network_traffic.csv
+│
+├── notebooks
+│   └── training_model.ipynb
+│
+├── src
+│   ├── data_preprocessing.py
+│   ├── train_model.py
+│   └── intrusion_detection.py
+│
+├── results
+│   └── model_accuracy.png
+│
+├── requirements.txt
+│
+└── README.md
+```
+
+---
+
+## 🚀 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/yourusername/intrusion-detection-system.git
+```
+
+Navigate to the project directory
+
+```bash
+cd intrusion-detection-system
+```
+
+Install required dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Running the Project
+
+Train the machine learning model
+
+```bash
+python train_model.py
+```
+
+Run the intrusion detection system
+
+```bash
+python intrusion_detection.py
+```
+
+---
+
+## 📈 Results
+
+The AI model analyzes network traffic data and detects suspicious patterns.
+
+### Output Includes
+
+- Attack classification  
+- Suspicious traffic alerts  
+- Security event logs  
+
+### Model Evaluation Metrics
+
+- Accuracy  
+- Precision  
+- Recall  
+- F1 Score
