@@ -183,3 +183,19 @@ The AI model analyzes network traffic data and detects suspicious patterns.
 - Precision  
 - Recall  
 - F1 Score
+  # 👩‍💻 Author
+
+**Thumma Manojna Reddy**
+
+AI / ML Enthusiast  
+B.Tech CSE (AI & ML)
+
+GitHub  
+https://github.com/thummamanojnareddy
+
+LinkedIn  
+https://www.linkedin.com/in/manojna-reddy-thumma-536b9730b/
+
+---
+
+⭐ If you found this project helpful, consider **starring the repository**!
